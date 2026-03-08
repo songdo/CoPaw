@@ -8,6 +8,10 @@ import {
   GithubOutlined,
 } from "@ant-design/icons";
 import { Button, Tooltip } from "@agentscope-ai/design";
+<<<<<<< HEAD
+=======
+import styles from "./index.module.less";
+>>>>>>> upstream/main
 
 const { Header: AntHeader } = Layout;
 
@@ -47,6 +51,7 @@ export default function Header({ selectedKey }: HeaderProps) {
   };
 
   return (
+<<<<<<< HEAD
     <AntHeader
       style={{
         height: 64,
@@ -59,6 +64,10 @@ export default function Header({ selectedKey }: HeaderProps) {
       }}
     >
       <span style={{ fontSize: 18, fontWeight: 500 }}>
+=======
+    <AntHeader className={styles.header}>
+      <span className={styles.headerTitle}>
+>>>>>>> upstream/main
         {t(keyToLabel[selectedKey] || "nav.chat")}
       </span>
       <Space size="middle">

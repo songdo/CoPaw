@@ -15,6 +15,10 @@ from typing import Optional
 
 from agentscope.message import Msg
 
+<<<<<<< HEAD
+=======
+from ...config import load_config
+>>>>>>> upstream/main
 from ...constant import WORKING_DIR
 from .file_handling import download_file_from_base64, download_file_from_url
 
@@ -260,12 +264,25 @@ async def process_file_and_media_blocks_in_message(msg) -> None:
             if local_path:
                 downloaded_files.append((i, local_path))
 
+<<<<<<< HEAD
         for i, local_path in reversed(downloaded_files):
             text_block = {
                 "type": "text",
                 "text": f"用户上传文件，已经下载到 {local_path}",
             }
             message.content.insert(i + 1, text_block)
+=======
+        if downloaded_files:
+            lang = load_config().agents.language
+            for i, local_path in reversed(downloaded_files):
+                text = (
+                    f"用户上传文件，已经下载到 {local_path}"
+                    if lang == "zh"
+                    else f"User uploaded a file, downloaded to {local_path}"
+                )
+                text_block = {"type": "text", "text": text}
+                message.content.insert(i + 1, text_block)
+>>>>>>> upstream/main
 
 
 def is_first_user_interaction(messages: list) -> bool:

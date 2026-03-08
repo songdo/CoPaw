@@ -4,6 +4,10 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import Header from "../Header";
 import ConsoleCronBubble from "../../components/ConsoleCronBubble";
+<<<<<<< HEAD
+=======
+import styles from "../index.module.less";
+>>>>>>> upstream/main
 import Chat from "../../pages/Chat";
 import ChannelsPage from "../../pages/Control/Channels";
 import SessionsPage from "../../pages/Control/Sessions";
@@ -46,7 +50,11 @@ export default function MainLayout() {
   }, [currentPath, navigate]);
 
   return (
+<<<<<<< HEAD
     <Layout style={{ height: "100vh" }}>
+=======
+    <Layout className={styles.mainLayout}>
+>>>>>>> upstream/main
       <Sidebar selectedKey={selectedKey} />
       <Layout>
         <Header selectedKey={selectedKey} />

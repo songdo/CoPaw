@@ -14,10 +14,31 @@ export const CHANNEL_COLORS: Record<string, string> = {
   console: "green",
 } as const;
 
+<<<<<<< HEAD
 export const formatTime = (timestamp: string | number | null): string => {
   if (timestamp === null || timestamp === undefined) return "N/A";
   const date =
     typeof timestamp === "string" ? new Date(timestamp) : new Date(timestamp);
+=======
+/**
+ * Normalize ISO timestamp to ensure UTC timezone is always recognized.
+ * Timestamps without timezone suffix (e.g. from datetime.utcnow()) are
+ * treated as local time by browsers, causing incorrect display. Appending
+ * 'Z' forces UTC interpretation, consistent with timezone-aware timestamps.
+ */
+const normalizeTimestamp = (timestamp: string): string => {
+  if (/[Z+\-]\d{2}:?\d{2}$/.test(timestamp) || timestamp.endsWith("Z")) {
+    return timestamp;
+  }
+  return timestamp + "Z";
+};
+
+export const formatTime = (timestamp: string | number | null): string => {
+  if (timestamp === null || timestamp === undefined) return "N/A";
+  const normalized =
+    typeof timestamp === "string" ? normalizeTimestamp(timestamp) : timestamp;
+  const date = new Date(normalized);
+>>>>>>> upstream/main
   return date.toLocaleString("zh-CN", {
     year: "numeric",
     month: "2-digit",

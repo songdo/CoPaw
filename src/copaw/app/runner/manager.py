@@ -4,7 +4,11 @@ from __future__ import annotations
 
 import asyncio
 import logging
+<<<<<<< HEAD
 from datetime import datetime
+=======
+from datetime import datetime, timezone
+>>>>>>> upstream/main
 from typing import Optional
 
 from .models import ChatSpec
@@ -137,7 +141,11 @@ class ChatManager:
             Updated chat spec
         """
         async with self._lock:
+<<<<<<< HEAD
             spec.updated_at = datetime.utcnow()
+=======
+            spec.updated_at = datetime.now(timezone.utc)
+>>>>>>> upstream/main
             await self._repo.upsert_chat(spec)
             return spec
 
