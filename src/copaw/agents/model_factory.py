@@ -38,8 +38,6 @@ from ..providers import (
 )
 
 
-<<<<<<< HEAD
-=======
 def _file_url_to_path(url: str) -> str:
     """
     Strip file:// to path. On Windows file:///C:/path -> C:/path not /C:/path.
@@ -51,7 +49,6 @@ def _file_url_to_path(url: str) -> str:
     return s
 
 
->>>>>>> upstream/main
 def _monkey_patch(func):
     """A monkey patch wrapper for agentscope <= 1.0.16dev"""
 
@@ -72,13 +69,7 @@ def _monkey_patch(func):
                     ):
                         url = block["source"]["url"]
                         if url.startswith("file://"):
-<<<<<<< HEAD
-                            block["source"]["url"] = url.removeprefix(
-                                "file://",
-                            )
-=======
                             block["source"]["url"] = _file_url_to_path(url)
->>>>>>> upstream/main
         return await func(self, msgs, **kwargs)
 
     return wrapper
@@ -136,14 +127,6 @@ def _create_file_block_support_formatter(
     class FileBlockSupportFormatter(base_formatter_class):
         """Formatter with file block support for tool results."""
 
-<<<<<<< HEAD
-        async def _format(self, msgs):
-            """Override to sanitize tool messages and handle thinking blocks.
-
-            This prevents OpenAI API errors from improperly paired
-            tool messages, and preserves reasoning_content from
-            "thinking" blocks that the base formatter skips.
-=======
         # pylint: disable=too-many-branches
         async def _format(self, msgs):
             """Override to sanitize tool messages, handle thinking blocks,
@@ -154,15 +137,11 @@ def _create_file_block_support_formatter(
             blocks that the base formatter skips, and ensures
             ``extra_content`` on tool_use blocks (e.g. Gemini
             thought_signature) is carried through to the API request.
->>>>>>> upstream/main
             """
             msgs = _sanitize_tool_messages(msgs)
 
             reasoning_contents = {}
-<<<<<<< HEAD
-=======
             extra_contents: dict[str, Any] = {}
->>>>>>> upstream/main
             for msg in msgs:
                 if msg.role != "assistant":
                     continue
@@ -172,11 +151,6 @@ def _create_file_block_support_formatter(
                         if thinking:
                             reasoning_contents[id(msg)] = thinking
                         break
-<<<<<<< HEAD
-
-            messages = await super()._format(msgs)
-
-=======
                 for block in msg.get_content_blocks():
                     if (
                         block.get("type") == "tool_use"
@@ -193,7 +167,6 @@ def _create_file_block_support_formatter(
                         if ec:
                             tc["extra_content"] = ec
 
->>>>>>> upstream/main
             if reasoning_contents:
                 in_assistant = [m for m in msgs if m.role == "assistant"]
                 out_assistant = [

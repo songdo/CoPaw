@@ -10,8 +10,6 @@ interface ColumnHandlers {
   t: TFunction;
 }
 
-<<<<<<< HEAD
-=======
 /** Normalize ISO string to UTC for consistent sorting across mixed timezone formats. */
 const toUTCTime = (ts: string | null | undefined): number => {
   if (!ts) return 0;
@@ -20,7 +18,6 @@ const toUTCTime = (ts: string | null | undefined): number => {
   return new Date(normalized).getTime();
 };
 
->>>>>>> upstream/main
 export const createColumns = (
   handlers: ColumnHandlers,
 ): ColumnsType<Session> => {
@@ -67,17 +64,8 @@ export const createColumns = (
       key: "created_at",
       width: 180,
       render: (timestamp: string | number | null) => formatTime(timestamp),
-<<<<<<< HEAD
-      sorter: (a: Session, b: Session) => {
-        const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
-        const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
-        return timeA - timeB;
-      },
-      defaultSortOrder: "descend",
-=======
       sorter: (a: Session, b: Session) =>
         toUTCTime(a.created_at) - toUTCTime(b.created_at),
->>>>>>> upstream/main
     },
     {
       title: "UpdatedAt",
@@ -85,17 +73,9 @@ export const createColumns = (
       key: "updated_at",
       width: 180,
       render: (timestamp: string | number | null) => formatTime(timestamp),
-<<<<<<< HEAD
-      sorter: (a: Session, b: Session) => {
-        const timeA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
-        const timeB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
-        return timeA - timeB;
-      },
-=======
       sorter: (a: Session, b: Session) =>
         toUTCTime(a.updated_at) - toUTCTime(b.updated_at),
       defaultSortOrder: "descend",
->>>>>>> upstream/main
     },
     {
       title: "Action",

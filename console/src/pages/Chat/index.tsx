@@ -11,6 +11,7 @@ import sessionApi from "./sessionApi";
 import { useLocalStorageState } from "ahooks";
 import defaultConfig, { DefaultConfig } from "./OptionsPanel/defaultConfig";
 import Weather from "./Weather";
+import FileUpload from "./FileUpload";
 import { getApiUrl, getApiToken } from "../../api/config";
 import { providerApi } from "../../api/modules/provider";
 import "./index.module.less";
@@ -138,9 +139,47 @@ export default function ChatPage() {
     } as unknown as IAgentScopeRuntimeWebUIOptions;
   }, [optionsConfig]);
 
+  const handleFilesUploaded = (files: File[]) => {
+    console.log("Files uploaded:", files);
+    // 这里可以添加文件上传到后端的逻辑
+    // 例如：将文件发送到服务器，然后将文件信息添加到聊天中
+    files.forEach((file) => {
+      console.log(`File: ${file.name}, Size: ${file.size}, Type: ${file.type}`);
+      // 在实际应用中，这里应该调用API上传文件
+      // 然后将文件信息作为消息发送到聊天
+    });
+  };
+
   return (
-    <div style={{ height: "100%", width: "100%" }}>
-      <AgentScopeRuntimeWebUI options={options} />
+    <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column" }}>
+      {/* 聊天容器 - 包含文件上传按钮和聊天组件 */}
+      <div style={{ flex: 1, minHeight: 0, position: "relative", display: "flex", flexDirection: "column" }}>
+        {/* 文件上传按钮 - 放在聊天区域内部，输入框上方 */}
+        <div style={{ 
+          position: "absolute", 
+          bottom: "60px",  // 在输入框上方
+          left: "16px",    // 输入框左侧
+          zIndex: 1000,
+          backgroundColor: "white",
+          padding: "6px",
+          borderRadius: "6px",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+          border: "1px solid #f0f0f0",
+        }}>
+          <FileUpload 
+            onFilesUploaded={handleFilesUploaded}
+            maxFiles={5}
+            maxSize={10}
+            acceptedTypes={['.pdf', '.doc', '.docx', '.txt', '.jpg', '.jpeg', '.png', '.xlsx', '.xls', '.csv', '.md']}
+            compactMode={true}
+          />
+        </div>
+        
+        {/* 聊天组件 - 占据剩余空间 */}
+        <div style={{ flex: 1, minHeight: 0 }}>
+          <AgentScopeRuntimeWebUI options={options} />
+        </div>
+      </div>
 
       <Modal open={showModelPrompt} closable={false} footer={null} width={480}>
         <Result

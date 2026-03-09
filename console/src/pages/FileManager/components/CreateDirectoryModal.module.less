@@ -1,0 +1,310 @@
+// 创建目录模态框样式
+
+.create-directory-modal {
+  :global {
+    .ant-modal-body {
+      padding: 24px;
+    }
+    
+    .ant-form-item {
+      margin-bottom: 24px;
+    }
+    
+    .ant-form-item-label {
+      font-weight: 500;
+      padding-bottom: 8px;
+    }
+    
+    .ant-form-item-explain {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    
+    .ant-input {
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 14px;
+      
+      &:focus {
+        border-color: #1890ff;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      }
+      
+      &:hover {
+        border-color: #40a9ff;
+      }
+    }
+    
+    .ant-input-affix-wrapper {
+      border-radius: 6px;
+      padding: 8px 12px;
+      
+      &:focus,
+      &:hover {
+        border-color: #40a9ff;
+      }
+      
+      &.ant-input-affix-wrapper-focused {
+        border-color: #1890ff;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      }
+    }
+  }
+}
+
+// 路径显示区域
+.path-display {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  border: 1px solid #f0f0f0;
+  
+  .path-label {
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-bottom: 4px;
+  }
+  
+  .path-value {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    color: #262626;
+    word-break: break-all;
+    
+    .path-prefix {
+      color: #8c8c8c;
+    }
+    
+    .path-current {
+      font-weight: 500;
+      color: #1890ff;
+    }
+  }
+}
+
+// 目录名输入区域
+.directory-input {
+  .input-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    
+    .label-text {
+      font-weight: 500;
+      color: #262626;
+      margin-right: 8px;
+    }
+    
+    .label-required {
+      color: #ff4d4f;
+      margin-right: 4px;
+    }
+  }
+  
+  .input-hint {
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  
+  .input-error {
+    font-size: 12px;
+    color: #ff4d4f;
+    margin-top: 4px;
+  }
+}
+
+// 输入提示
+.input-tips {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 16px;
+  
+  .tips-title {
+    font-weight: 500;
+    color: #52c41a;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    
+    .tips-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+  }
+  
+  .tips-content {
+    font-size: 12px;
+    color: #8c8c8c;
+    line-height: 1.5;
+    
+    .tips-item {
+      margin-bottom: 4px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+// 操作按钮组
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  
+  .cancel-btn {
+    color: #8c8c8c;
+    
+    &:hover {
+      color: #262626;
+      background: #f5f5f5;
+    }
+  }
+  
+  .create-btn {
+    min-width: 100px;
+  }
+}
+
+// 验证状态
+.validation-status {
+  margin-top: 8px;
+  
+  .status-valid {
+    display: flex;
+    align-items: center;
+    color: #52c41a;
+    font-size: 12px;
+    
+    .status-icon {
+      margin-right: 4px;
+      font-size: 14px;
+    }
+  }
+  
+  .status-invalid {
+    display: flex;
+    align-items: center;
+    color: #ff4d4f;
+    font-size: 12px;
+    
+    .status-icon {
+      margin-right: 4px;
+      font-size: 14px;
+    }
+  }
+}
+
+// 目录名建议
+.directory-suggestions {
+  margin-top: 16px;
+  
+  .suggestions-title {
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-bottom: 8px;
+  }
+  
+  .suggestions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    
+    .suggestion-tag {
+      cursor: pointer;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: #f0f0f0;
+      color: #8c8c8c;
+      transition: all 0.2s;
+      
+      &:hover {
+        background: #e6f7ff;
+        color: #1890ff;
+      }
+    }
+  }
+}
+
+// 加载状态
+.creating-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  
+  .creating-spinner {
+    margin-bottom: 16px;
+  }
+  
+  .creating-text {
+    font-size: 14px;
+    color: #8c8c8c;
+  }
+}
+
+// 成功状态
+.success-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  
+  .success-icon {
+    font-size: 48px;
+    color: #52c41a;
+    margin-bottom: 16px;
+  }
+  
+  .success-text {
+    font-size: 16px;
+    color: #262626;
+    margin-bottom: 8px;
+  }
+  
+  .success-detail {
+    font-size: 14px;
+    color: #8c8c8c;
+  }
+}
+
+// 错误状态
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  
+  .error-icon {
+    font-size: 48px;
+    color: #ff4d4f;
+    margin-bottom: 16px;
+  }
+  
+  .error-text {
+    font-size: 16px;
+    color: #ff4d4f;
+    margin-bottom: 8px;
+  }
+  
+  .error-detail {
+    font-size: 14px;
+    color: #8c8c8c;
+  }
+}

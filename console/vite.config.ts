@@ -28,20 +28,48 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+        scheduler: path.resolve(__dirname, "node_modules/react-dom/node_modules/scheduler"),
       },
     },
     server: {
       host: "0.0.0.0",
       port: 5173,
+      allowedHosts: ["test2"],
+      // 添加代理配置，解决前后端分别启动时的CORS问题
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8088',
+          changeOrigin: true,
+          secure: false,
+        },
+        '/agent': {
+          target: 'http://localhost:8088',
+          changeOrigin: true,
+          secure: false,
+        },
+        '/docs': {
+          target: 'http://localhost:8088',
+          changeOrigin: true,
+          secure: false,
+        },
+        '/openapi.json': {
+          target: 'http://localhost:8088',
+          changeOrigin: true,
+          secure: false,
+        }
+      }
     },
     optimizeDeps: {
-      include: ["diff"],
+      include: ["diff", "scheduler"],
     },
-    // build: {
-    //   // Output to CoPaw's console directory,
-    //   // so we don't need to copy files manually after build.
-    //   outDir: path.resolve(__dirname, "../src/copaw/console"),
-    //   emptyOutDir: true,
-    // },
+    build: {
+      rollupOptions: {
+        external: ["scheduler"],
+      },
+      // Output to CoPaw's console directory,
+      // so we don't need to copy files manually after build.
+      // outDir: path.resolve(__dirname, "../src/copaw/console"),
+      // emptyOutDir: true,
+    },
   };
 });

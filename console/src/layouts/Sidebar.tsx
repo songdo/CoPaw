@@ -33,12 +33,10 @@ import {
   PanelLeftOpen,
   Copy,
   Check,
+  Folder,
 } from "lucide-react";
 import api from "../api";
-<<<<<<< HEAD
-=======
 import styles from "./index.module.less";
->>>>>>> upstream/main
 
 const { Sider } = Layout;
 
@@ -57,6 +55,7 @@ const KEY_TO_PATH: Record<string, string> = {
   sessions: "/sessions",
   "cron-jobs": "/cron-jobs",
   heartbeat: "/heartbeat",
+  "file-manager": "/file-manager",
   skills: "/skills",
   mcp: "/mcp",
   workspace: "/workspace",
@@ -95,8 +94,6 @@ docker run -p 127.0.0.1:8088:8088 -v copaw-data:/app/working agentscope/copaw:la
 
 升级后重启服务 copaw app。`,
 
-<<<<<<< HEAD
-=======
   ru: `### Как обновить CoPaw
 
 Чтобы обновить CoPaw, выберите способ в зависимости от типа установки:
@@ -126,7 +123,6 @@ docker run -p 127.0.0.1:8088:8088 -v copaw-data:/app/working agentscope/copaw:la
 
 После обновления перезапустите сервис с помощью \`copaw app\`.`,
 
->>>>>>> upstream/main
   en: `### How to update CoPaw
 
 To update CoPaw, use the method matching your installation type:
@@ -181,19 +177,9 @@ function CopyButton({ text }: { text: string }) {
         size="small"
         icon={copied ? <Check size={13} /> : <Copy size={13} />}
         onClick={handleCopy}
-<<<<<<< HEAD
-        style={{
-          position: "absolute",
-          top: 8,
-          right: 8,
-          color: copied ? "#52c41a" : "#999",
-          transition: "color 0.2s",
-        }}
-=======
         className={`${styles.copyBtn} ${
           copied ? styles.copyBtnCopied : styles.copyBtnDefault
         }`}
->>>>>>> upstream/main
       />
     </Tooltip>
   );
@@ -228,11 +214,6 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
       .then((res) => res.json())
       .then((data) => {
         const releases = data?.releases ?? {};
-<<<<<<< HEAD
-        const versions = Object.keys(releases);
-        const latest =
-          versions[versions.length - 1] ?? data?.info?.version ?? "";
-=======
         // Sort versions by upload_time (newest first)
         const versionsWithTime = Object.entries(releases).map(
           ([version, files]) => {
@@ -252,7 +233,6 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
         );
         const versions = versionsWithTime.map((v) => v.version);
         const latest = versions[0] ?? data?.info?.version ?? "";
->>>>>>> upstream/main
         setAllVersions(versions);
         setLatestVersion(latest);
       })
@@ -268,10 +248,6 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
   const handleOpenUpdateModal = () => {
     setUpdateMarkdown("");
     setUpdateModalOpen(true);
-<<<<<<< HEAD
-    const lang = i18n.language?.startsWith("zh") ? "zh" : "en";
-    const url = `https://copaw.agentscope.io/docs/faq.${lang}.md`;
-=======
     const lang = i18n.language?.startsWith("zh")
       ? "zh"
       : i18n.language?.startsWith("ru")
@@ -279,23 +255,16 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
       : "en";
     const faqLang = lang === "zh" ? "zh" : "en";
     const url = `https://copaw.agentscope.io/docs/faq.${faqLang}.md`;
->>>>>>> upstream/main
     fetch(url, { cache: "no-cache" })
       .then((res) => (res.ok ? res.text() : Promise.reject()))
       .then((text) => {
         const zhPattern = /###\s*CoPaw如何更新[\s\S]*?(?=\n###|$)/;
         const enPattern = /###\s*How to update CoPaw[\s\S]*?(?=\n###|$)/;
-<<<<<<< HEAD
-        const match = text.match(lang === "zh" ? zhPattern : enPattern);
-        setUpdateMarkdown(
-          match ? match[0].trim() : UPDATE_MD[lang] ?? UPDATE_MD.en,
-=======
         const match = text.match(faqLang === "zh" ? zhPattern : enPattern);
         setUpdateMarkdown(
           match && lang !== "ru"
             ? match[0].trim()
             : UPDATE_MD[lang] ?? UPDATE_MD.en,
->>>>>>> upstream/main
         );
       })
       .catch(() => {
@@ -337,6 +306,11 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
           label: t("nav.heartbeat"),
           icon: <Activity size={16} />,
         },
+        {
+          key: "file-manager",
+          label: t("fileManager.title"),
+          icon: <Folder size={16} />,
+        },
       ],
     },
     {
@@ -377,42 +351,6 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
     <Sider
       collapsed={collapsed}
       onCollapse={setCollapsed}
-<<<<<<< HEAD
-      width={260}
-      style={{
-        background: "#fff",
-        borderRight: "1px solid #f0f0f0",
-        overflow: "auto",
-        height: "100vh",
-      }}
-    >
-      <div
-        style={{
-          height: 64,
-          display: "flex",
-          alignItems: "center",
-          padding: "0 16px",
-          gap: 12,
-        }}
-      >
-        {!collapsed && (
-          <>
-            <img
-              src="/logo.png"
-              alt="CoPaw"
-              style={{ height: 32, width: "auto" }}
-            />
-            {version && (
-              <Badge dot={!!hasUpdate} color="red" offset={[2, 4]}>
-                <span
-                  style={{
-                    fontSize: 12,
-                    color: "#615ced",
-                    fontWeight: 600,
-                    lineHeight: 1,
-                    cursor: hasUpdate ? "pointer" : "default",
-                  }}
-=======
       width={275}
       className={styles.sider}
     >
@@ -428,18 +366,13 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
                       ? styles.versionBadgeClickable
                       : styles.versionBadgeDefault
                   }`}
->>>>>>> upstream/main
                   onClick={() => hasUpdate && handleOpenUpdateModal()}
                 >
                   v{version}
                 </span>
               </Badge>
             )}
-<<<<<<< HEAD
-          </>
-=======
           </div>
->>>>>>> upstream/main
         )}
         <Button
           type="text"
@@ -451,11 +384,7 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
             )
           }
           onClick={() => setCollapsed(!collapsed)}
-<<<<<<< HEAD
-          style={{ margin: "auto", color: "#615ced" }}
-=======
           className={styles.collapseBtn}
->>>>>>> upstream/main
         />
       </div>
 
@@ -475,11 +404,7 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
         open={updateModalOpen}
         onCancel={() => setUpdateModalOpen(false)}
         title={
-<<<<<<< HEAD
-          <h3 style={{ color: "#615ced" }}>
-=======
           <h3 className={styles.updateModalTitle}>
->>>>>>> upstream/main
             {t("sidebar.updateModal.title", { version: latestVersion })}
           </h3>
         }
@@ -494,11 +419,7 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
                 "_blank",
               )
             }
-<<<<<<< HEAD
-            style={{ background: "#615ced", borderColor: "#615ced" }}
-=======
             className={styles.updateModalPrimaryBtn}
->>>>>>> upstream/main
           >
             {t("sidebar.updateModal.viewReleases")}
           </Button>,
@@ -507,29 +428,9 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
           </Button>,
         ]}
       >
-<<<<<<< HEAD
-        <div
-          style={{
-            maxHeight: 480,
-            overflowY: "auto",
-            padding: "8px 4px",
-            minHeight: 120,
-          }}
-        >
-          {!updateMarkdown ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: 120,
-              }}
-            >
-=======
         <div className={styles.updateModalBody}>
           {!updateMarkdown ? (
             <div className={styles.updateModalSpinWrapper}>
->>>>>>> upstream/main
               <Spin />
             </div>
           ) : (
@@ -542,48 +443,16 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
                     String(children).includes("\n");
                   if (isBlock) {
                     return (
-<<<<<<< HEAD
-                      <pre
-                        style={{
-                          position: "relative",
-                          background: "#f5f5f5",
-                          border: "1px solid #e8e8e8",
-                          borderRadius: 6,
-                          padding: "12px 40px 12px 16px",
-                          overflowX: "auto",
-                          margin: "8px 0",
-                        }}
-                      >
-                        <CopyButton text={String(children)} />
-                        <code
-                          style={{ fontFamily: "monospace", fontSize: 13 }}
-                          {...props}
-                        >
-=======
                       <pre className={styles.codeBlock}>
                         <CopyButton text={String(children)} />
                         <code className={styles.codeBlockInner} {...props}>
->>>>>>> upstream/main
                           {children}
                         </code>
                       </pre>
                     );
                   }
                   return (
-<<<<<<< HEAD
-                    <code
-                      style={{
-                        background: "#f5f5f5",
-                        borderRadius: 3,
-                        padding: "1px 5px",
-                        fontFamily: "monospace",
-                        fontSize: 13,
-                      }}
-                      {...props}
-                    >
-=======
                     <code className={styles.codeInline} {...props}>
->>>>>>> upstream/main
                       {children}
                     </code>
                   );

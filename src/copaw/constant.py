@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 from pathlib import Path
+# 获取项目根目录
+
 
 WORKING_DIR = (
-    Path(os.environ.get("COPAW_WORKING_DIR", "~/.copaw"))
+    Path(os.environ.get("COPAW_WORKING_DIR","~/.copaw/"))
     .expanduser()
     .resolve()
 )

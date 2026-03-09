@@ -50,7 +50,7 @@ load_envs_into_environ()
 
 runner = AgentRunner()
 
-agent_app = AgentApp(
+agent_app = AgentApp(#This application instance is later used to mount routes at `/api/agent` in the FastAPI application, providing agent-related API endpoints.
     app_name="Friday",
     app_description="A helpful assistant",
     runner=runner,
@@ -509,8 +509,7 @@ app.include_router(
 # POST /voice/incoming, WS /voice/ws, POST /voice/status-callback
 app.include_router(voice_router, tags=["voice"])
 
-# Mount console: root static files (logo.png etc.) then assets, then SPA
-# fallback.
+# Mount console: root static files (logo.png etc.) then assets
 if os.path.isdir(_CONSOLE_STATIC_DIR):
     _console_path = Path(_CONSOLE_STATIC_DIR)
 
@@ -538,9 +537,24 @@ if os.path.isdir(_CONSOLE_STATIC_DIR):
             name="assets",
         )
 
-    @app.get("/{full_path:path}")
-    def _console_spa(full_path: str):
-        if _CONSOLE_INDEX and _CONSOLE_INDEX.exists():
-            return FileResponse(_CONSOLE_INDEX)
+# SPA fallback route - must be defined AFTER all API routes
+# This route should not capture API paths
+@app.get("/{full_path:path}")
+def _console_spa(full_path: str):
+    # Check if this is an API path - if so, let it pass through (should be handled by API routes)
+    # But in case API routes didn't handle it, we return 404
+    if full_path.startswith("api/"):
+        # This should have been handled by API routes
+        logger.warning(f"API route not handled by any API endpoint: '{full_path}'")
+        raise HTTPException(status_code=404, detail="API endpoint not found")
+    
+    # Only serve SPA if console static directory exists
+    if not os.path.isdir(_CONSOLE_STATIC_DIR):
+        raise HTTPException(status_code=404, detail="Console not available")
+    
+    logger.info(f"SPA fallback route called with non-API path: '{full_path}'")
+    
+    if _CONSOLE_INDEX and _CONSOLE_INDEX.exists():
+        return FileResponse(_CONSOLE_INDEX)
 
-        raise HTTPException(status_code=404, detail="Not Found")
+    raise HTTPException(status_code=404, detail="Not Found")

@@ -131,21 +131,14 @@ def _sanitize_stream_item(item: Any) -> Any:
 
 
 class _SanitizedStream:
-<<<<<<< HEAD
-    """Proxy OpenAI async stream that sanitizes each emitted item."""
-=======
     """Proxy OpenAI async stream that sanitizes each emitted item and
     captures ``extra_content`` from tool-call chunks (used by Gemini
     thinking models to carry ``thought_signature``)."""
->>>>>>> upstream/main
 
     def __init__(self, stream: Any):
         self._stream = stream
         self._ctx_stream: Any | None = None
-<<<<<<< HEAD
-=======
         self.extra_contents: dict[str, Any] = {}
->>>>>>> upstream/main
 
     async def __aenter__(self) -> "_SanitizedStream":
         self._ctx_stream = await self._stream.__aenter__()
@@ -166,13 +159,6 @@ class _SanitizedStream:
         if self._ctx_stream is None:
             raise StopAsyncIteration
         item = await self._ctx_stream.__anext__()
-<<<<<<< HEAD
-        return _sanitize_stream_item(item)
-
-
-class OpenAIChatModelCompat(OpenAIChatModel):
-    """OpenAIChatModel with robust parsing for malformed tool-call chunks."""
-=======
         self._capture_extra_content(item)
         return _sanitize_stream_item(item)
 
@@ -199,7 +185,6 @@ class OpenAIChatModelCompat(OpenAIChatModel):
 class OpenAIChatModelCompat(OpenAIChatModel):
     """OpenAIChatModel with robust parsing for malformed tool-call chunks
     and transparent ``extra_content`` (Gemini thought_signature) relay."""
->>>>>>> upstream/main
 
     async def _parse_openai_stream_response(
         self,
@@ -213,8 +198,6 @@ class OpenAIChatModelCompat(OpenAIChatModel):
             response=sanitized_response,
             structured_model=structured_model,
         ):
-<<<<<<< HEAD
-=======
             if sanitized_response.extra_contents:
                 for block in parsed.content:
                     if block.get("type") != "tool_use":
@@ -225,5 +208,4 @@ class OpenAIChatModelCompat(OpenAIChatModel):
                     ec = sanitized_response.extra_contents.get(tool_id)
                     if ec:
                         block["extra_content"] = ec
->>>>>>> upstream/main
             yield parsed

@@ -254,9 +254,7 @@ class MessageRenderer:
             MessageType.MCP_TOOL_CALL_OUTPUT,
         ):
             if s.filter_tool_messages:
-<<<<<<< HEAD
-                return []
-=======
+                # 当过滤工具消息时，只返回媒体内容
                 media_types = (
                     ContentType.IMAGE,
                     ContentType.AUDIO,
@@ -283,7 +281,6 @@ class MessageRenderer:
                             ],
                         )
                 return media_parts
->>>>>>> upstream/main
             parts = _parts_for_tool_output(content)
             if not parts:
                 parts = [TextContent(text=f"[{msg_type}]")]

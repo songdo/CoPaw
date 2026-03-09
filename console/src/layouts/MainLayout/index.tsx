@@ -4,10 +4,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import Header from "../Header";
 import ConsoleCronBubble from "../../components/ConsoleCronBubble";
-<<<<<<< HEAD
-=======
 import styles from "../index.module.less";
->>>>>>> upstream/main
 import Chat from "../../pages/Chat";
 import ChannelsPage from "../../pages/Control/Channels";
 import SessionsPage from "../../pages/Control/Sessions";
@@ -19,6 +16,7 @@ import WorkspacePage from "../../pages/Agent/Workspace";
 import MCPPage from "../../pages/Agent/MCP";
 import ModelsPage from "../../pages/Settings/Models";
 import EnvironmentsPage from "../../pages/Settings/Environments";
+import FileManagerPage from "../../pages/FileManager";
 
 const { Content } = Layout;
 
@@ -28,6 +26,7 @@ const pathToKey: Record<string, string> = {
   "/sessions": "sessions",
   "/cron-jobs": "cron-jobs",
   "/heartbeat": "heartbeat",
+  "/file-manager": "file-manager",
   "/skills": "skills",
   "/mcp": "mcp",
   "/workspace": "workspace",
@@ -50,11 +49,7 @@ export default function MainLayout() {
   }, [currentPath, navigate]);
 
   return (
-<<<<<<< HEAD
-    <Layout style={{ height: "100vh" }}>
-=======
     <Layout className={styles.mainLayout}>
->>>>>>> upstream/main
       <Sidebar selectedKey={selectedKey} />
       <Layout>
         <Header selectedKey={selectedKey} />
@@ -67,6 +62,7 @@ export default function MainLayout() {
               <Route path="/sessions" element={<SessionsPage />} />
               <Route path="/cron-jobs" element={<CronJobsPage />} />
               <Route path="/heartbeat" element={<HeartbeatPage />} />
+              <Route path="/file-manager" element={<FileManagerPage />} />
               <Route path="/skills" element={<SkillsPage />} />
               <Route path="/mcp" element={<MCPPage />} />
               <Route path="/workspace" element={<WorkspacePage />} />

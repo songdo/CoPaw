@@ -1270,6 +1270,56 @@ class FeishuChannel(BaseChannel):
             ),
         )
 
+            or getattr(part, "video_url", None)
+>>>>>>> upstream/main
+            or getattr(part, "data", None)
+            or ""
+        )
+        url = (url or "").strip() if isinstance(url, str) else ""
+        filename = getattr(part, "filename", None) or "file.bin"
+        b64 = None
+        if (
+            isinstance(url, str)
+            and url.startswith("data:")
+            and "base64," in url
+        ):
+            b64 = url
+            url = ""
+        if b64:
+            raw = (
+                b64.split("base64,", 1)[-1].strip()
+                if isinstance(b64, str)
+                else b64
+            )
+            try:
+                data = base64.b64decode(raw)
+            except Exception as e:
+                logger.warning(
+                    "feishu _part_to_file_path_or_url base64 decode: %s",
+                    e,
+                )
+                return None
+            self._media_dir.mkdir(parents=True, exist_ok=True)
+            path = self._media_dir / f"upload_{id(part)}_{filename}"
+            path.write_bytes(data)
+            return str(path)
+        if url:
+            if url.startswith("file://"):
+                local_path = file_url_to_local_path(url)
+                if local_path:
+                    path = Path(local_path)
+                    if path.exists():
+                        return str(path)
+            else:
+                path = Path(url)
+                if path.exists():
+                    return url
+                if url.startswith(("http://", "https://")):
+                    return url
+        logger.info(
+            "feishu _send_file: part has no file_url/url/base64",
+        )
+        return None
     async def _part_to_file_path_or_url(
         self,
         part: OutgoingContentPart,
@@ -1278,7 +1328,55 @@ class FeishuChannel(BaseChannel):
         url = (
             getattr(part, "file_url", None)
             or getattr(part, "image_url", None)
-<<<<<<< HEAD
+            or getattr(part, "video_url", None)
+            or getattr(part, "data", None)
+            or ""
+        )
+        url = (url or "").strip() if isinstance(url, str) else ""
+        filename = getattr(part, "filename", None) or "file.bin"
+        b64 = None
+        if (
+            isinstance(url, str)
+            and url.startswith("data:")
+            and "base64," in url
+        ):
+            b64 = url
+            url = ""
+        if b64:
+            raw = (
+                b64.split("base64,", 1)[-1].strip()
+                if isinstance(b64, str)
+                else b64
+            )
+            try:
+                data = base64.b64decode(raw)
+            except Exception as e:
+                logger.warning(
+                    "feishu _part_to_file_path_or_url base64 decode: %s",
+                    e,
+                )
+                return None
+            self._media_dir.mkdir(parents=True, exist_ok=True)
+            path = self._media_dir / f"upload_{id(part)}_{filename}"
+            path.write_bytes(data)
+            return str(path)
+        if url:
+            if url.startswith("file://"):
+                local_path = file_url_to_local_path(url)
+                if local_path:
+                    path = Path(local_path)
+                    if path.exists():
+                        return str(path)
+            else:
+                path = Path(url)
+                if path.exists():
+                    return url
+                if url.startswith(("http://", "https://")):
+                    return url
+        logger.info(
+            "feishu _send_file: part has no file_url/url/base64",
+        )
+        return None
 =======
             or getattr(part, "video_url", None)
 >>>>>>> upstream/main

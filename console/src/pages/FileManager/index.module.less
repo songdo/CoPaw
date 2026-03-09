@@ -1,0 +1,222 @@
+/**
+ * 文件管理页面样式
+ */
+
+.file-manager-page {
+  height: 100%;
+  width: 100%;
+  
+  .ant-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    .ant-card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+  }
+
+  // 面包屑样式
+  .ant-breadcrumb {
+    margin-bottom: 0;
+    
+    .ant-breadcrumb-link {
+      .ant-btn {
+        padding: 0;
+        height: auto;
+        font-size: 14px;
+        
+        &:hover {
+          color: #1890ff;
+        }
+      }
+    }
+  }
+
+  // 统计卡片样式
+  .ant-card-small {
+    .ant-statistic {
+      .ant-statistic-title {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.45);
+      }
+      
+      .ant-statistic-content {
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // 表格样式
+  .ant-table-wrapper {
+    flex: 1;
+    min-height: 0;
+    
+    .ant-table {
+      height: 100%;
+      
+      .ant-table-container {
+        height: 100%;
+        
+        .ant-table-body {
+          height: calc(100% - 55px); // 减去表头高度
+          overflow: auto;
+        }
+      }
+    }
+  }
+
+  // 文件列表项样式
+  .ant-table-tbody {
+    .ant-table-row {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #fafafa;
+      }
+      
+      .ant-btn-link {
+        color: #1890ff;
+        text-align: left;
+        
+        &:hover {
+          color: #40a9ff;
+        }
+      }
+    }
+  }
+
+  // 操作按钮样式
+  .ant-space {
+    .ant-btn {
+      min-width: 32px;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+
+  // 搜索框样式
+  .ant-input-search {
+    .ant-input {
+      border-radius: 4px;
+      
+      &:focus {
+        border-color: #1890ff;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      }
+    }
+    
+    .ant-input-group-addon {
+      .ant-btn {
+        border-radius: 0 4px 4px 0;
+      }
+    }
+  }
+
+  // 空状态样式
+  .ant-empty {
+    padding: 40px 0;
+    
+    .ant-empty-image {
+      height: 80px;
+      margin-bottom: 16px;
+    }
+    
+    .ant-empty-description {
+      color: rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  // 加载状态样式
+  .ant-spin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    
+    .ant-spin-text {
+      margin-top: 12px;
+      color: rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    .ant-row {
+      flex-direction: column;
+      
+      .ant-col {
+        width: 100%;
+        margin-bottom: 16px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    
+    .ant-space {
+      flex-wrap: wrap;
+      
+      .ant-input-search {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+    }
+    
+    .ant-table {
+      .ant-table-thead {
+        display: none;
+      }
+      
+      .ant-table-tbody {
+        .ant-table-row {
+          display: block;
+          border-bottom: 1px solid #f0f0f0;
+          padding: 12px;
+          
+          .ant-table-cell {
+            display: block;
+            border: none;
+            padding: 4px 0;
+            
+            &:before {
+              content: attr(data-label);
+              font-weight: 600;
+              margin-right: 8px;
+              color: rgba(0, 0, 0, 0.85);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 暗色主题支持
+[data-theme='dark'] {
+  .file-manager-page {
+    .ant-table-tbody {
+      .ant-table-row {
+        &:hover {
+          background-color: #1f1f1f;
+        }
+      }
+    }
+    
+    .ant-empty-description {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    
+    .ant-spin-text {
+      color: rgba(255, 255, 255, 0.45);
+    }
+  }
+}
